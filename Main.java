@@ -24,27 +24,48 @@ class Main {
     int indexLeft = 0;
     int indexRight = array.length-1;
     int tmp = 0;
+    int cnt = 0;
 
-    //while(indexLeft < array.length-1 && indexRight >=1) {
+
     	tmp = array[indexLeft];
 
-    	while(indexRight > indexLeft+1) {
+    	while(indexRight > indexLeft+1 && indexLeft != array.length-1) {
+    		 //System.out.println("here");
     		if(array[indexRight] < pivot) {
+    			cnt++;
+    			//System.out.println("switch "+array[indexLeft]+" and "+array[indexRight]);
     			array[indexLeft] = array[indexRight];
     			array[indexRight] = tmp;
-    			while(array[indexRight] > pivot && indexRight >1) {
+    			while(array[indexRight] > pivot && indexRight >indexLeft) {
     				indexRight--;
+    				//System.out.println("_"+indexRight+" = "+array[indexRight]);
     			}
-    			while(array[indexLeft] <= pivot && indexLeft<array.length-1) {
-
+    			while(array[indexLeft] <= pivot && indexLeft<indexRight) {
     				indexLeft++;
+       		    	//System.out.println("|"+indexLeft+" = "+array[indexLeft]);
     			}
     		}else {
+    	    	//System.out.println("*"+indexRight+" = "+array[indexRight]);
     			indexRight--;
     		}
     	}
+    	if(cnt == 0) {
+    		return array;
+    	}else {
+    		//System.out.println("cnt" + cnt);
+    		int[] pivotLess = Arrays.copyOfRange(array,  0, indexLeft);
+        	int[] pivotLarge = Arrays.copyOfRange(array, indexRight, array.length);
+        	if(pivotLess.length > 0) {
+        	  	sort(pivotLess);
+        	}
+        	if(pivotLarge.length > 0) {
+            	sort(pivotLarge);
+        	}
+    	}
 
-    return array;
+    	//System.out.println(Arrays.toString(pivotLess));
+        //System.out.println(Arrays.toString(pivotLarge));
+    	return array;
     // ここまで記述
   }
 }
